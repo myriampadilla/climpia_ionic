@@ -1,0 +1,93 @@
+<!--
+  Generated template for the ClientePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Cliente</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<button ion-button (click)="traerSolicitudes()" full 
+	color="secondary">Solicitudes</button>
+	<ion-list>
+	    <ion-item>
+	      <ion-label fixed>Puntos por redimir</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.puntos_por_redimir" name="puntos_por_redimir" type="text"></ion-input>
+	    </ion-item>
+
+	    <ion-item>
+	      <ion-label fixed>Puntos redimidos</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.puntos_redimidos" name="puntos_redimidos" type="text"></ion-input>
+	    </ion-item>
+
+	    <ion-item>
+	      <ion-label fixed>Tipo identificacion</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.tipo_identificacion" name="tipo_identificacion" type="text"></ion-input>
+	    </ion-item>
+
+	    <ion-item>
+	      <ion-label fixed>Numero identificacion</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.numero_identificacion" name="numero_identificacion" type="text"></ion-input>
+	    </ion-item>	    
+
+        <ion-item>
+	      <ion-label fixed>Primer nombre</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.primer_nombre" name="primer_nombre" type="text"></ion-input>
+	    </ion-item>
+	    
+	    <ion-item>
+	      <ion-label fixed>Segundo nombre</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.segundo_nombre" 
+	      name="segundo_nombre" type="text"></ion-input>
+	    </ion-item>
+
+        <ion-item>
+	      <ion-label fixed>Primer apellido</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.primer_apellido" 
+	      name="primer_apellido" type="text"></ion-input>
+	    </ion-item>
+	    
+	    <ion-item>
+	      <ion-label fixed>Segundo apellido</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.segundo_apellido" 
+	      name="segundo_apellido" type="text"></ion-input>
+	    </ion-item>
+
+        <ion-item>
+	      <ion-label fixed>Numero telefonico</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.numero_telefonico" 
+	      name="primer_apellido" type="text"></ion-input>
+	    </ion-item>
+	    
+	    <ion-item>
+	      <ion-label fixed>Correo electronico</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.correo_electronico" 
+	      name="correo_electronico" type="text"></ion-input>
+	    </ion-item>
+
+	    <ion-item>
+	      <ion-label fixed>Direccion</ion-label>
+	      <ion-input [(ngModel)]="formulario.cliente.direccion" 
+	      name="direccion" type="text"></ion-input>
+	    </ion-item>
+
+	</ion-list>
+    <div padding>
+	    <button ion-button color="primary" (click)="modificarCliente()" block>Grabar</button>
+   	    <button ion-button color="primary" (click)="salir()" block>Salir</button>
+	</div>
+</ion-content>
+
+
+           
+           
+           
+           
+           

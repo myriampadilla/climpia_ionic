@@ -1,0 +1,8 @@
+{
+  "name": "climpia_ionic",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "4f20eb0b"
+}

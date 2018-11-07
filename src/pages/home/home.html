@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Inicio</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Bienvenido a la pagina de Climpia</h2>
+    <button *ngIf="login" ion-button full (click)="cerrarSesion()">
+      Cerrar Sesión
+    </button>
+
+    <button *ngIf="login==false" ion-button full (click)="irA('IniciarSesionPage')">
+      Iniciar Sesión
+    </button>
+    <button *ngIf="login==false" ion-button full (click)="irA('CrearCuentaPage')">
+      Crear cuenta
+    </button>
+    
+</ion-content>
