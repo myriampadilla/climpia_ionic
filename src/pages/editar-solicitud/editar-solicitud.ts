@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SolicitudesProvider } from './../../providers/solicitudes/solicitudes'
 import { DominiosProvider} from './../../providers/dominios/dominios';
+import { UsuariosProvider} from './../../providers/usuarios/usuarios';
 
 /**
  * Generated class for the EditarSolicitudPage page.
@@ -21,12 +22,12 @@ export class EditarSolicitudPage {
     dom_tipo_material:any;
     dom_unidad_medida:any;
 
-
   	constructor(
 	  	public navCtrl: NavController, 
 	  	public navParams: NavParams,
-	  	public _solicitudes: SolicitudesProvider,
-      private _dominios:DominiosProvider
+	  	private _solicitudes: SolicitudesProvider,
+      private _dominios:DominiosProvider,
+      private _usuarios:UsuariosProvider
   	) {
  	  	this.solicitud={
           numero_solicitud:"",
@@ -52,15 +53,21 @@ export class EditarSolicitudPage {
            nombre_valor: "",
            valor_dominio:[{id:"", id_valor:"",nombre_valor:""}]
     }
-    console.log('EditarSolicitudPage.constructor');
-    this.traer_dom_tipo_material (3);
-    this.traer_dom_unidad_medida (4);
 
+    console.log('EditarSolicitudPage.constructor');
  	}
+
+  ionViewCanEnter(){  
+    return this._usuarios.isAuthenticate();
+  }
 
 	ionViewDidLoad() {
 	console.log('ionViewDidLoad EditarSolicitudPage');
-	    this._solicitudes.
+  //==============================
+  this.traer_dom_tipo_material (3);
+  this.traer_dom_unidad_medida (4);
+  //==============================
+	this._solicitudes.
 	    	showSolicitud(this.navParams.get('id'),localStorage.getItem("SessionToken")).
 	    	subscribe(respuestaSolicitud=>{
 	    		this.solicitud=respuestaSolicitud;
@@ -76,11 +83,10 @@ export class EditarSolicitudPage {
 	}
 
   regresar () {
-         this.navCtrl.pop();  
+    this.navCtrl.pop();  
   }
 
   traer_dom_tipo_material (idparametro){
-    console.log('traerDominio '+idparametro);
     this._dominios.showDominio(idparametro,
         localStorage.getItem("SessionToken")).
            subscribe(respuestaDominio=>{
@@ -89,7 +95,6 @@ export class EditarSolicitudPage {
   } // fin-traerDominio
  
   traer_dom_unidad_medida (idparametro){
-    console.log('traerDominio '+idparametro);
     this._dominios.showDominio(idparametro,
         localStorage.getItem("SessionToken")).
            subscribe(respuestaDominio=>{

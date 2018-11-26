@@ -1,8 +1,8 @@
-<!--
-  Generated template for the VerSolicitudPage page.
+  <!--
+Generated template for the VerSolicitudPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+See http://ionicframework.com/docs/components/#navigation for more info on
+Ionic pages and navigation.
 -->
 <ion-header>
 
@@ -13,75 +13,136 @@
 </ion-header>
 
 <ion-content padding>
-	<ion-card>
-	   	<ion-card-header>
-    		Solicitud: {{solicitud.id}}
-  		</ion-card-header>
-       <ion-card-content>
-        Fecha solicitud: {{solicitud.fecha_solicitud}}
-      </ion-card-content>
-  		<ion-card-content>
-    		Estado: {{solicitud.estado}}
-      </ion-card-content>
-      <ion-card-content>
-        Fecha cambio estado: {{solicitud.fecha_cambio_estado}}
-      </ion-card-content>
-
-
- <ion-card-content>
-     <ion-item>
-      <ion-label>Tipo Material</ion-label>
-      <ion-select [(ngModel)]="solicitud.id_tipo_material">
-        <ion-option *ngFor=
-        "let valorDominio of
-              dom_tipo_material.valor_dominio"
-             value={{valorDominio.id_valor}}>
-      {{valorDominio.nombre_valor}}
-    </ion-option>
-      </ion-select>
-    </ion-item>
-</ion-card-content>
-
- <ion-card-content>
-    <ion-item>
-      <ion-label>Unidad de medida</ion-label>
-      <ion-select  
-        [(ngModel)]="solicitud.id_unidad_medida">
-        <ion-option *ngFor=
-        "let valorDominio of
-              dom_unidad_medida.valor_dominio"
-             value={{valorDominio.id_valor}}>
-      {{valorDominio.nombre_valor}}
-    </ion-option>
-      </ion-select>
-    </ion-item>
-</ion-card-content>    
-
-
-
-      <ion-card-content>  
-        Cantidad: {{solicitud.cantidad}}
-  		</ion-card-content>
-      <ion-card-content>  
-        Observaciones: {{solicitud.observaciones}}
-      </ion-card-content>
-	</ion-card>
-
   <ion-grid>
-  <ion-row justify-content-center>
-    <ion-col col-3>
-     <button ion-button (click)="editarSolicitud()" full
-         color="secondary">Editar</button>
-      </ion-col>
-    <ion-col col-3>
-     <button ion-button (click)="desistirSolicitud()" full
-         color="secondary">Desisitir</button>
-    </ion-col>
-    <ion-col col-3>
-    <button ion-button (click)="regresar()" full
-         color="secondary">Regresar</button>
+    <ion-row justify-content-center>
+      <ion-col col-3>
+       <button ion-button (click)="editarSolicitud()" full
+       color="secondary">Editar</button>
+     </ion-col>
+     <ion-col col-3>
+       <button ion-button (click)="desistirSolicitud()" full
+       color="secondary">Desisitir</button>
+     </ion-col>
+     <ion-col col-3>
+      <button ion-button (click)="regresar()" full
+      color="secondary">Regresar</button>
     </ion-col>
   </ion-row>
   </ion-grid>
 
-</ion-content>
+  <ion-card>
+    <ion-card-header>
+       Solicitud: {{solicitud.id}}
+    </ion-card-header>
+    <ion-card-content>
+      Fecha solicitud: {{solicitud.fecha_solicitud}}
+    </ion-card-content>
+    <ion-card-content>
+
+      <ion-list >
+        <ion-item>
+          <ion-label>Estado:</ion-label>
+          <ion-select disabled="true" [(ngModel)]=
+             "solicitud.estado">
+            <ion-option *ngFor="let valorDominio of 
+                 dominioEstadoSolicitud.valor_dominio"
+                 value={{valorDominio.id_valor}}>
+                       {{valorDominio.nombre_valor}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+    <ion-card-content>
+      Fecha cambio estado: {{solicitud.fecha_cambio_estado}}
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Tipo Material</ion-label>
+        <ion-select disabled="true" 
+              [(ngModel)]="solicitud.id_tipo_material">
+          <ion-option *ngFor=
+            "let valorDominio of
+            dom_tipo_material.valor_dominio"
+            value={{valorDominio.id_valor}}>
+            {{valorDominio.nombre_valor}}
+          </ion-option>
+        </ion-select>
+      </ion-item> 
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Unidad de medida</ion-label>
+        <ion-select  disabled="true"
+           [(ngModel)]="solicitud.id_unidad_medida">
+          <ion-option *ngFor=
+            "let valorDominio of
+            dom_unidad_medida.valor_dominio"
+            value={{valorDominio.id_valor}}>
+            {{valorDominio.nombre_valor}}
+          </ion-option> 
+        </ion-select>
+      </ion-item>
+    </ion-card-content>    
+
+    <ion-card-content>  
+      Cantidad: {{solicitud.cantidad}}
+    </ion-card-content>
+    <ion-card-content>  
+      Observaciones: {{solicitud.observaciones}}
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+       Transportador -Solicitud
+    </ion-card-header>
+    <ion-card-content>
+      Transportador: 
+       {{servicio.transportador.primer_nombre }}
+       {{servicio.transportador.segundo_nombre }}
+       {{servicio.transportador.primer_apellido }}
+    </ion-card-content>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Tipo vehiculo</ion-label>
+        <ion-select  disabled="true"  
+             [(ngModel)]="servicio.tipo_vehiculo">
+          <ion-option *ngFor="let valorDominio of 
+                 dominioTipoVehiculo.valor_dominio"
+                 value={{valorDominio.id_valor}}>
+                       {{valorDominio.nombre_valor}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-card-content>
+    <ion-card-content>
+      Placa vehiculo:{{servicio.placa_vehiculo}} 
+    </ion-card-content>
+    <ion-card-content>
+      Telefono transportador:
+           {{servicio.transportador.numero_telefonico}} 
+    </ion-card-content>
+    <ion-card-content>
+      Fecha y hora estimada recolección: 
+      {{servicio.fecha_hora_estimada_recoleccion}}
+    </ion-card-content>
+    <ion-card-content>
+      Recolección efectiva (S/N): 
+      {{servicio.recoleccion_efectiva_sn}}
+    </ion-card-content>
+ 
+    <ion-card-content>
+      Fecha y hora efectiva recolección: 
+      {{servicio.fecha_hora_recoleccion}}
+    </ion-card-content>
+ 
+  </ion-card>
+
+</ion-content>  
+

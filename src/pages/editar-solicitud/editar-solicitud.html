@@ -23,20 +23,20 @@
         "let valorDominio of
               dom_tipo_material.valor_dominio"
              value={{valorDominio.id_valor}}>
-			{{valorDominio.nombre_valor}}
-		</ion-option>
+	                	{{valorDominio.nombre_valor}}
+		    </ion-option>
       </ion-select>
     </ion-item>
     
     <ion-item>
-      <ion-label>Cantidad medida</ion-label>
+      <ion-label>Unidad Medida</ion-label>
       <ion-select [(ngModel)]="solicitud.id_unidad_medida">
         <ion-option *ngFor=
         "let valorDominio of
               dom_unidad_medida.valor_dominio"
              value={{valorDominio.id_valor}}>
-			{{valorDominio.nombre_valor}}
-		</ion-option>
+			             {{valorDominio.nombre_valor}}
+		    </ion-option>
       </ion-select>
     </ion-item>
 

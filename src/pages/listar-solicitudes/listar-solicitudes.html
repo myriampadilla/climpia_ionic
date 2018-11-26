@@ -1,5 +1,5 @@
 <!--
-  Generated template for the TraerSolicitudesPage page.
+  Generated template for the ListarSolicitudesPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,17 +7,15 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Solicitudes</ion-title>
+    <ion-title>Listar solicitudes</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
-	<h2>Solicitudes <button (click)="nuevaSolicitud()" ion-button full color="secondary">Nueva Solicitud</button></h2>
-
-	<ion-list>
-		<button ion-item *ngFor="let solicitud of solicitudes" (click)="verSolicitud(solicitud.id)">
-			{{solicitud.id}}
+	<ion-list *ngFor="let solicitud of solicitudes">
+		<button ion-item (click)="verSolicitud(solicitud.id)">
+			{{solicitud.id}} {{solicitud.observaciones}}  
 		</button>
 	</ion-list>
 
@@ -26,3 +24,4 @@
 	</div>	
 
 </ion-content>
+

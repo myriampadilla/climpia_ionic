@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
-import { CrearCuentaPage } from './../crear-cuenta/crear-cuenta';
-import { IniciarSesionPage } from './../iniciar-sesion/iniciar-sesion';
 
 @Component({
   selector: 'page-home',

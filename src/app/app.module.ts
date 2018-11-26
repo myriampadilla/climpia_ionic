@@ -10,9 +10,6 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { CrearCuentaPage } from './../pages/crear-cuenta/crear-cuenta';
-import { IniciarSesionPage } from './../pages/iniciar-sesion/iniciar-sesion';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UsuariosProvider } from '../providers/usuarios/usuarios';
@@ -20,6 +17,8 @@ import { ClientesProvider } from '../providers/clientes/clientes';
 import { SolicitudesProvider } from '../providers/solicitudes/solicitudes';
 import { DominiosProvider } from '../providers/dominios/dominios';
 import { ValorDominiosProvider } from '../providers/valor-dominios/valor-dominios';
+import { TransportadorsProvider } from '../providers/transportadors/transportadors';
+import { ServiciosProvider } from '../providers/servicios/servicios';
 
 @NgModule({
   declarations: [
@@ -51,7 +50,9 @@ import { ValorDominiosProvider } from '../providers/valor-dominios/valor-dominio
     ClientesProvider,
     SolicitudesProvider,
     DominiosProvider,
-    ValorDominiosProvider
+    ValorDominiosProvider,
+    TransportadorsProvider,
+    ServiciosProvider
   ]
 })
 export class AppModule {}

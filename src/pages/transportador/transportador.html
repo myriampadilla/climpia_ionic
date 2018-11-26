@@ -1,0 +1,155 @@
+
+<!--
+  Generated template for the ClientePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Transportador</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <div padding>
+  	    <button ion-button color="primary" (click)="tomarServicio()" block
+   	      >Tomar Servicio</button>
+   	    <button ion-button color="primary" (click)="salir()" block>Salir</button>
+	</div>
+
+	<ion-list>
+
+<ion-card-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Estado:</ion-label>
+      <ion-select disabled="true" [(ngModel)]=
+             "formulario.transportador.estado">
+        <ion-option *ngFor="let valorDominio of 
+                 dominioEstadoTransportador.valor_dominio"
+                 value={{valorDominio.id_valor}}>
+                       {{valorDominio.nombre_valor}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-card-content>
+
+	    <ion-item>
+           <ion-label>Tipo identificacion</ion-label>
+           <ion-select [(ngModel)]=
+             "formulario.transportador.tipo_identificacion">
+             <ion-option *ngFor="let valorDominio of 
+                 dominioTipoIdentificacion.valor_dominio"
+                 value={{valorDominio.id_valor}}>
+			     {{valorDominio.nombre_valor}}
+		     </ion-option>
+           </ion-select>
+        </ion-item>
+
+	    <ion-item>
+	      <ion-label fixed>Numero</ion-label>
+	      <ion-input [(ngModel)]="formulario.transportador.numero_identificacion" name="numero_identificacion" type="text"></ion-input>
+	    </ion-item>	    
+
+        <ion-item>
+	      <ion-label fixed>Primer nombre</ion-label>
+	      <ion-input [(ngModel)]="formulario.transportador.primer_nombre" name="primer_nombre" type="text" required #primer_nombre=
+	      "ngModel"></ion-input>
+	    </ion-item>
+	    <span *ngIf="primer_nombre.errors">
+                <span [hidden]="!primer_nombre.errors.required">
+                    <ion-label style="color: red; margin-left: 16px;"> Primer nombre es requerido </ion-label>
+                </span>
+        </span>
+	    
+	    <ion-item>
+	      <ion-label fixed>Segundo nombre</ion-label>
+	      <ion-input [(ngModel)]="formulario.transportador.segundo_nombre" 
+	      name="segundo_nombre" type="text"></ion-input>
+	    </ion-item>
+
+        <ion-item>
+	      <ion-label fixed>Primer apellido</ion-label>
+	      <ion-input [(ngModel)]=
+	      "formulario.transportador.primer_apellido" 
+	      name="primer_apellido" type="text"
+	      required #primer_apellido="ngModel"
+	      ></ion-input>
+	    </ion-item>
+	    <span *ngIf="primer_apellido.errors">
+                <span [hidden]="!primer_apellido.errors.required">
+                    <ion-label style="color: red; margin-left: 16px;"> Primer apellido es requerido </ion-label>
+                </span>
+        </span>
+
+	    <ion-item>
+	      <ion-label fixed>Segundo apellido</ion-label>
+	      <ion-input [(ngModel)]="formulario.transportador.segundo_apellido" 
+	      name="segundo_apellido" type="text"></ion-input>
+	    </ion-item>
+
+        <ion-item>
+	      <ion-label fixed>Numero telefonico</ion-label>
+	      <ion-input [(ngModel)]="formulario.transportador.numero_telefonico" 
+	      name="primer_apellido" type="text"></ion-input>
+	    </ion-item>
+	    
+	    <ion-item>
+	      <ion-label fixed>Correo electronico</ion-label>
+	      <ion-input disabled="true" [(ngModel)]="formulario.transportador.correo_electronico" 
+	      name="correo_electronico" type="text"></ion-input>
+	    </ion-item>
+
+	    <ion-item>
+	      <ion-label fixed>Direccion</ion-label>
+	      <ion-input [(ngModel)]="formulario.transportador.direccion" 
+	      name="direccion" type="text"></ion-input>
+	    </ion-item> 
+
+        <ion-card>
+        <ion-card-content>
+        <ion-list>
+
+	      <ion-item>
+           <ion-label>Tipo vehiculo</ion-label>
+           <ion-select [(ngModel)]=
+             "formulario.transportador.tipo_vehiculo">
+             <ion-option *ngFor="let valorDominio of 
+                 dominioTipoVehiculo.valor_dominio"
+                 value={{valorDominio.id_valor}}>
+			     {{valorDominio.nombre_valor}}
+		     </ion-option>
+           </ion-select>
+        </ion-item>
+
+          <ion-item>
+	      <ion-label fixed>Marca vehiculo</ion-label>
+	      <ion-input [(ngModel)]="formulario.transportador.marca_vehiculo" 
+	      name="marca_vehiculo" type="text"></ion-input>
+	      </ion-item> 
+
+          <ion-item>
+	      <ion-label fixed>Placa vehiculo</ion-label>
+	      <ion-input [(ngModel)]="formulario.transportador.placa_vehiculo" 
+	      name="placa_vehiculo" type="text"></ion-input>
+	      </ion-item> 
+
+        </ion-list>
+        </ion-card-content>
+        </ion-card>
+
+	</ion-list>
+    <div padding>
+	    <button ion-button color="secondary" 
+	    (click)="modificarTransportador()" block>Grabar</button>
+	</div>
+</ion-content>
+
+
+           
+           
+           
+           
+           

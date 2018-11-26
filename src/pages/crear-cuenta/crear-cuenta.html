@@ -39,7 +39,8 @@
     <ion-item>
       <ion-label>Tipo Usuario</ion-label>
       <ion-select [(ngModel)]="formulario.usuario.id_tipo_usuario">
-        <ion-option *ngFor="let valorDominio of dominio.valor_dominio"
+        <ion-option *ngFor="let valorDominio of
+             dominioTipoUsuario.valor_dominio"
              value={{valorDominio.id_valor}}>
 			{{valorDominio.nombre_valor}}
 		</ion-option>

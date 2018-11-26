@@ -2,6 +2,8 @@ import { TabsPage } from './../tabs/tabs'
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ClientesProvider } from './../../providers/clientes/clientes';
+import { DominiosProvider} from './../../providers/dominios/dominios';
+import { UsuariosProvider} from './../../providers/usuarios/usuarios';
 
 /**
  * Generated class for the ClientePage page.
@@ -18,12 +20,15 @@ import { ClientesProvider } from './../../providers/clientes/clientes';
 export class ClientePage {
   formulario:any;
   idCliente:number;
+  dominioTipoIdentificacion: any;
  
  constructor(
   		public navCtrl: NavController, 
 	  	public navParams: NavParams, 
 	  	private _clientes:ClientesProvider, 
-	  	private alertCtrl:AlertController
+	  	private alertCtrl:AlertController,
+      private _dominios:DominiosProvider,
+      private _usuarios:UsuariosProvider
   	) {
   	this.formulario={
   		cliente:{
@@ -40,13 +45,26 @@ export class ClientePage {
            correo_electronico: "",
            direccion: ""
   		}
-  		
   	};
+    this.dominioTipoIdentificacion={
+           id: "",
+           id_valor: "",
+           nombre_valor: "",
+           valor_dominio:[{id:"", id_valor:"",nombre_valor:""}]
+    };
+      
+  }
+
+  ionViewCanEnter(){  
+    return this._usuarios.isAuthenticate();
   }
     
   ionViewDidLoad() {
   	this.idCliente=this.navParams.get('id');
     console.log('ionViewDidLoad ClientePage');
+    //=====================
+    this.traerTipoIdentificacion(6);  // tipo de identificacion
+    //=====================
     this.verCliente();
   }
 
@@ -74,12 +92,43 @@ export class ClientePage {
   }
 
   traerSolicitudes() {
+    if (this.formulario.cliente.tipo_identificacion  == null ||
+        this.formulario.cliente.numero_identificacion == null ||
+        this.formulario.cliente.primer_nombre == null ||
+        this.formulario.cliente.primer_apellido == null ||
+        this.formulario.cliente.numero_telefonico == null ||
+        this.formulario.cliente.correo_electronico == null ||
+        this.formulario.cliente.direccion == null
+       ) {
+       //==================================
+       let alert = this.alertCtrl.create({
+          title: '',
+          subTitle: 'Por favor registre la informacion completa',
+          buttons: ['OK']
+       });
+       alert.present();
+       //==================================
+       }
+    else {      
+      //==================================
       this.navCtrl.push('TraerSolicitudesPage');
+      //==================================
+    }
+    
    }
 
   salir() {
       this.navCtrl.setRoot (TabsPage);
       this.navCtrl.popToRoot();  
    }
+
+  traerTipoIdentificacion (idparametro){
+    this._dominios.showDominio(idparametro,
+        localStorage.getItem("SessionToken")).
+           subscribe(respuestaDominio=>{
+               this.dominioTipoIdentificacion=respuestaDominio;
+    });
+  } // fin-traerTipoIdentificacion
+
 
 }

@@ -5,7 +5,7 @@ import { TabsPage } from './../tabs/tabs'
 import { UsuariosProvider} from './../../providers/usuarios/usuarios';
 
 /**
- * Generated class for the TraerSolicitudesPage page.
+ * Generated class for the ListarSolicitudesPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -13,57 +13,46 @@ import { UsuariosProvider} from './../../providers/usuarios/usuarios';
 
 @IonicPage()
 @Component({
-  selector: 'page-traer-solicitudes',
-  templateUrl: 'traer-solicitudes.html',
+  selector: 'page-listar-solicitudes',
+  templateUrl: 'listar-solicitudes.html'
 })
-export class TraerSolicitudesPage {
+export class ListarSolicitudesPage {
 
   solicitudes:Array<any>;
-  solicitud={
-        numero_solicitud:"",
-        fecha_solicitud:"",
-        estado:"",
-        fecha_cambio_estado:"",
-        id_tipo_material:"",
-        id_unidad_medida:"",
-        cantidad:"",
-        observaciones:"",
-        cliente_id:"",
-        id_ultimo_servicio:""
-  }
-  
+  idTransportador:number;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public alertCtrl:AlertController, 
     private _solicitudes:SolicitudesProvider,
-    private _usuarios:UsuariosProvider,
+    private _usuarios:UsuariosProvider
     ) {}
 
-  ionViewCanEnter(){    
+
+  ionViewCanEnter(){  
     return this._usuarios.isAuthenticate();
   }
 
   ionViewDidLoad() {
-     console.log('ionViewDidLoad TraerSolicitudesPage');
+     this.idTransportador=this.navParams.get('idTransportador');
+     console.log('ionViewDidLoad ListarSolicitudesPage'+
+       ' idTransportador:'+this.idTransportador);
      this.traerSolicitudes();
   }
 
   traerSolicitudes(){
-    this._solicitudes.
+     this._solicitudes.
       getSolicitudes (localStorage.getItem("SessionToken")).
       subscribe(respuestaSolicitudes=>{
         this.solicitudes=respuestaSolicitudes;
       });
-
   }
 
   verSolicitud(id){
-    this.navCtrl.push('VerSolicitudPage',{id:id});
-  }
-
-  nuevaSolicitud(){
-    this.navCtrl.push('CrearSolicitudPage');
+    this.navCtrl.push('VerSoltranspPage',
+     {idTransportador:this.idTransportador,
+      idSolicitud:id});
   }
 
   salir() {

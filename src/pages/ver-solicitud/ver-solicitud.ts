@@ -1,9 +1,9 @@
-import { TabsPage } from './../tabs/tabs';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { DominiosProvider } from './../../providers/dominios/dominios';
 import { SolicitudesProvider } from './../../providers/solicitudes/solicitudes';
-
+import { ServiciosProvider } from './../../providers/servicios/servicios'
+import { DominiosProvider } from './../../providers/dominios/dominios';
+import { UsuariosProvider} from './../../providers/usuarios/usuarios';
 /**
  * Generated class for the VerSolicitudPage page.
  *
@@ -22,15 +22,26 @@ export class VerSolicitudPage {
   solicitud:any;
   dom_tipo_material:any;
   dom_unidad_medida:any;
+  dominioEstadoSolicitud:any;
+  dominioTipoVehiculo: any;
+  servicio:any;
+  estadoSolicitud: number;
 
   constructor(
   	public navCtrl: NavController, 
   	public navParams: NavParams,
-  	public _solicitudes:SolicitudesProvider,
-  	public alrtCtrl:AlertController,
-    private _dominios:DominiosProvider
+    public alrtCtrl:AlertController,
+  	private _solicitudes:SolicitudesProvider,
+    private _servicios:ServiciosProvider,
+    private _dominios:DominiosProvider,
+    private _usuarios:UsuariosProvider
     ) {
-
+    this.dominioEstadoSolicitud={
+           id: "",
+           id_valor: "",
+           nombre_valor: "",
+           valor_dominio:[{id:"", id_valor:"",nombre_valor:""}]
+    }
   	this.solicitud={
         numero_solicitud:"",
         fecha_solicitud:"",
@@ -55,29 +66,116 @@ export class VerSolicitudPage {
            nombre_valor: "",
            valor_dominio:[{id:"", id_valor:"",nombre_valor:""}]
     }
+    this.dominioTipoVehiculo={
+           id: "",
+           id_valor: "",
+           nombre_valor: "",
+           valor_dominio:[{id:"", id_valor:"",nombre_valor:""}]
+    }
+    this.servicio={
+         id:"", 
+         tipo_vehiculo:"", 
+         placa_vehiculo:"", 
+         fecha_creacion_servicio:"", 
+         fecha_hora_estimada_recoleccion:"", 
+         recoleccion_efectiva_sn:"", 
+         puntos_otorgados_cliente:"", 
+         fecha_hora_recoleccion:"", 
+         observaciones_calificacion:"", 
+         nota_calificacion:"", 
+         observaciones_informe:"",
+         solicitud_id:"", 
+         transportador_id:"",
+       solicitud:[{
+            id:"",
+            numero_solicitud:"",
+            fecha_solicitud:"",
+            estado:"",
+            fecha_cambio_estado:"",
+            id_tipo_material:"",
+            id_unidad_medida:"",
+            cantidad:"",
+            observaciones:"",
+            cliente_id:"",
+            id_ultimo_servicio:""
+         }],
+         transportador:[{
+            id:"", 
+            estado:"", 
+            fecha_cambio_estado:"", 
+            planificador_cambio_estado:"", 
+            tipo_identificacion:"", 
+            numero_identificacion:"", 
+            primer_nombre:"", 
+            segundo_nombre:"", 
+            primer_apellido:"", 
+            segundo_apellido:"", 
+            numero_telefonico:"", 
+            correo_electronico:"", 
+            direccion:"", 
+            tipo_vehiculo:"", 
+            marca_vehiculo:"", 
+            placa_vehiculo:"", 
+            id_servicio_actual:""
+         }]    
+    }
    
     console.log('VerSolicitudPage.constructor');
-    this.traer_dom_tipo_material (3);
-    this.traer_dom_unidad_medida (4);
-
   }
   
-    ionViewDidLoad() {
-  	   console.log('ionViewDidLoad VerSolicitudPage');
-  	   this.idSolicitud=this.navParams.get('id');
-    
-       this.verSolicitud();
-    }
+  ionViewCanEnter(){    
+    return this._usuarios.isAuthenticate();
+  }
+
+  ionViewDidLoad() {
+  	console.log('ionViewDidLoad VerSolicitudPage');
+  	this.idSolicitud=this.navParams.get('id');
+    //=============================
+    this.traer_dom_tipo_material (3);
+    this.traer_dom_unidad_medida (4);
+    this.traerTipoVehiculo (5);   
+    this.traerEstadoSolicitud (2);
+    //=============================
+    this.verSolicitud();
+  }
 
     verSolicitud(){
 	    this._solicitudes.
-	    	showSolicitud(this.idSolicitud,localStorage.getItem("SessionToken")).
+	    	showSolicitud(this.idSolicitud,
+          localStorage.getItem("SessionToken")).
 	    	subscribe(respuestaSolicitud=>{
 	    		this.solicitud=respuestaSolicitud;
-	    });
-  	}
 
-  	desistirSolicitud(){
+          this.estadoSolicitud = respuestaSolicitud.estado;
+          console.log('estadoSolicitud:'+this.estadoSolicitud);
+         
+          console.log('servicio:'+this.solicitud.id_ultimo_servicio);
+          if (this.solicitud.id_ultimo_servicio != null) {
+             this.verServicio();
+          }
+          
+	    });
+  }
+
+  verServicio(){
+    this._servicios.showServicio(this.solicitud.id_ultimo_servicio,
+        localStorage.getItem("SessionToken")).
+      subscribe(respuestaServicio=>{
+        this.servicio=respuestaServicio;
+      });
+  }
+
+  desistirSolicitud(){
+      // 3-finalizada, 4-desistida
+      if (this.estadoSolicitud == 3 ||
+          this.estadoSolicitud == 4
+        ) {
+          return;
+      }
+
+      //Pendiente: Que pasa si la solicitud 
+      // esta en estado 2 Asignada
+
       //solicitud.estado = 4 Desistida
       this.solicitud.estado = '4';
   		let alert= this.alrtCtrl.create({
@@ -103,26 +201,25 @@ export class VerSolicitudPage {
   		});
 
   		alert.present();
-  	}
+      this.navCtrl.push('VerSolicitudPage',{id:this.idSolicitud});
+  }
 
-  	editarSolicitud(){
+  editarSolicitud(){
       // 3-finalizada, 4-desistida
-      if (this.solicitud.estado == "3" ||
-          this.solicitud.estado == "4"
+      if (this.estadoSolicitud == 3 ||
+          this.estadoSolicitud == 4
         ) {
-          //nulo
+          return;
       }
-      else {
-  	   	this.navCtrl.push('EditarSolicitudPage',{id:this.idSolicitud});
-      }
-  	}
+      this.navCtrl.push('EditarSolicitudPage',{id:this.idSolicitud});
+      
+  }
 
-    regresar() {
+  regresar() {
       this.navCtrl.push('TraerSolicitudesPage');
-    }
+  }
 
- traer_dom_tipo_material (idparametro){
-    console.log('traerDominio '+idparametro);
+  traer_dom_tipo_material (idparametro){
     this._dominios.showDominio(idparametro,
         localStorage.getItem("SessionToken")).
            subscribe(respuestaDominio=>{
@@ -131,7 +228,6 @@ export class VerSolicitudPage {
   } // fin-traerDominio
  
   traer_dom_unidad_medida (idparametro){
-    console.log('traerDominio '+idparametro);
     this._dominios.showDominio(idparametro,
         localStorage.getItem("SessionToken")).
            subscribe(respuestaDominio=>{
@@ -139,5 +235,20 @@ export class VerSolicitudPage {
     });
   } // fin-traerDominio
 
+  traerEstadoSolicitud (idparametro){
+    this._dominios.showDominio(idparametro,
+        localStorage.getItem("SessionToken")).
+           subscribe(respuestaDominio=>{
+               this.dominioEstadoSolicitud=respuestaDominio;
+    });
+  } // fin-traerEstadoSolicitud
+
+  traerTipoVehiculo (idparametro){
+    this._dominios.showDominio(idparametro,
+        localStorage.getItem("SessionToken")).
+           subscribe(respuestaDominio=>{
+               this.dominioTipoVehiculo=respuestaDominio;
+    });
+  } // fin-traerTipoVehiculo
 
 }

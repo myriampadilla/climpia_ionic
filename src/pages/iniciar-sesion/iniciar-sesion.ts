@@ -4,7 +4,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UsuariosProvider } from './../../providers/usuarios/usuarios';
 import { AlertController } from 'ionic-angular';
 
-
 /**
  * Generated class for the IniciarSesionPage page.
  *
@@ -71,17 +70,27 @@ export class IniciarSesionPage {
     if (this.formulario.usuario.id_tipo_usuario == 1) {
         this.navCtrl.push('ClientePage',
             {id:this.formulario.usuario.id});
+        return;
     }
-    else {
-      let alert = this.alertCtrl.create({
+    if (this.formulario.usuario.id_tipo_usuario == 2) {
+        this.navCtrl.push('TransportadorPage',
+            {idTransportador:this.formulario.usuario.id});
+        return;
+    }
+    
+    let alert = this.alertCtrl.create({
         title: 'Lo siento',
         subTitle: 'Opcion en construccion',
         buttons: ['OK']
       });
-      alert.present();      
-    } // del else
+    alert.present();      
+    
             
   } // fin-navegar
 
+  salir (){
+    this.navCtrl.setRoot (TabsPage);
+    this.navCtrl.popToRoot();  
+  }
   
 }

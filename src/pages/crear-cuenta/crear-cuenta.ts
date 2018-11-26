@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UsuariosProvider } from './../../providers/usuarios/usuarios';
-import { AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { TabsPage } from './../tabs/tabs'
 import { DominiosProvider} from './../../providers/dominios/dominios';
-
+import { UsuariosProvider } from './../../providers/usuarios/usuarios';
 
 /**
  * Generated class for the CrearCuentaPage page.
@@ -21,41 +19,56 @@ import { DominiosProvider} from './../../providers/dominios/dominios';
 export class CrearCuentaPage {
 
   formulario:any;
-  dominio: any;
-
+  dominioTipoUsuario: any;
   
   constructor(
   		public navCtrl: NavController, 
 	  	public navParams: NavParams, 
-	  	private _usuarios:UsuariosProvider, 
 	  	private alertCtrl:AlertController,
-	  	private _dominios:DominiosProvider
+	  	private _dominios:DominiosProvider,
+      private _usuarios:UsuariosProvider
   ) 
   {
   	this.formulario={
   		usuario:{
   			username: "",
-  			email: "",
+        email:"",
   			password: "",
   			password_confirmation: "",
   			id_tipo_usuario:""
   		}
   	 }
-    this.dominio={
+    this.dominioTipoUsuario={
            id: "",
            id_valor: "",
            nombre_valor: "",
            valor_dominio:[{id:"", id_valor:"",nombre_valor:""}]
     }
-    console.log('constructor');
-    this.traerDominio(1);    
   }
-   
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad CrearCuentaPage');
+    // Hasta ahora va a crear la cuenta, 
+    // por tanto no se verifica que este autenticado
+    localStorage.setItem("SessionToken",null);
+    this.traerTipoUsuario(1);   // tipo de usuario 
   }
 
   crearCuenta(){
+    if (this.formulario.usuario.username == "" ||
+        this.formulario.usuario.email == "" ||
+        this.formulario.usuario.password == "" ||
+        this.formulario.usuario.password_confirmation == "" ||
+        this.formulario.usuario.id_tipo_usuario ==""
+    ) {
+      let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: 'Por favor suministre toda la información',
+        buttons: ['OK']
+      });
+        alert.present();
+      return;
+    }
       this._usuarios.signUpUsuario(this.formulario).subscribe(usuario=>{
         let auth={
           auth:
@@ -91,15 +104,13 @@ export class CrearCuentaPage {
       this.navCtrl.popToRoot();  
     }
 
-  traerDominio (idparametro){
-    console.log('traerDominio '+idparametro);
-    localStorage.setItem("SessionToken",null);
+  traerTipoUsuario (idparametro){
     this._dominios.showDominio(idparametro,
         localStorage.getItem("SessionToken")).
            subscribe(respuestaDominio=>{
-               this.dominio=respuestaDominio;
+               this.dominioTipoUsuario=respuestaDominio;
     });
-  } // fin-traerDominio
+  } // fin-traerTipoUsuario
 
 
 }

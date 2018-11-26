@@ -16,24 +16,31 @@
 <ion-content padding>
 	<button ion-button (click)="traerSolicitudes()" full 
 	color="secondary">Solicitudes</button>
+
+
+<ion-card>
+    <ion-card-content>
+      Puntos por redimir: {{formulario.cliente.puntos_por_redimir}}
+    </ion-card-content>
+    <ion-card-content>
+      Puntos redimidos: {{formulario.cliente.puntos_redimidos}}
+    </ion-card-content>
+</ion-card>
+
 	<ion-list>
-	    <ion-item>
-	      <ion-label fixed>Puntos por redimir</ion-label>
-	      <ion-input [(ngModel)]="formulario.cliente.puntos_por_redimir" name="puntos_por_redimir" type="text"></ion-input>
-	    </ion-item>
+    <ion-item>
+      <ion-label>Tipo identificación</ion-label>
+      <ion-select [(ngModel)]="formulario.cliente.tipo_identificacion">
+        <ion-option *ngFor="let valorDominio of 
+               dominioTipoIdentificacion.valor_dominio"
+             value={{valorDominio.id_valor}}>
+			{{valorDominio.nombre_valor}}
+		</ion-option>
+      </ion-select>
+    </ion-item>
 
 	    <ion-item>
-	      <ion-label fixed>Puntos redimidos</ion-label>
-	      <ion-input [(ngModel)]="formulario.cliente.puntos_redimidos" name="puntos_redimidos" type="text"></ion-input>
-	    </ion-item>
-
-	    <ion-item>
-	      <ion-label fixed>Tipo identificacion</ion-label>
-	      <ion-input [(ngModel)]="formulario.cliente.tipo_identificacion" name="tipo_identificacion" type="text"></ion-input>
-	    </ion-item>
-
-	    <ion-item>
-	      <ion-label fixed>Numero identificacion</ion-label>
+	      <ion-label fixed>Número identificación</ion-label>
 	      <ion-input [(ngModel)]="formulario.cliente.numero_identificacion" name="numero_identificacion" type="text"></ion-input>
 	    </ion-item>	    
 
@@ -61,19 +68,19 @@
 	    </ion-item>
 
         <ion-item>
-	      <ion-label fixed>Numero telefonico</ion-label>
+	      <ion-label fixed>Numero telefónico</ion-label>
 	      <ion-input [(ngModel)]="formulario.cliente.numero_telefonico" 
 	      name="primer_apellido" type="text"></ion-input>
 	    </ion-item>
 	    
 	    <ion-item>
-	      <ion-label fixed>Correo electronico</ion-label>
-	      <ion-input [(ngModel)]="formulario.cliente.correo_electronico" 
+	      <ion-label fixed>Correo electrónico</ion-label>
+	      <ion-input disabled="true" [(ngModel)]="formulario.cliente.correo_electronico" 
 	      name="correo_electronico" type="text"></ion-input>
 	    </ion-item>
 
 	    <ion-item>
-	      <ion-label fixed>Direccion</ion-label>
+	      <ion-label fixed>Dirección</ion-label>
 	      <ion-input [(ngModel)]="formulario.cliente.direccion" 
 	      name="direccion" type="text"></ion-input>
 	    </ion-item>

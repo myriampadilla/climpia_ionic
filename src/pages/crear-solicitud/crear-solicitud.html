@@ -52,11 +52,17 @@
 		  	<ion-item>
 		    	<ion-textarea [(ngModel)]="solicitud.observaciones" 
 		    	name="observaciones"></ion-textarea>
-	  		</ion-item>
+	  		</ion-item> 
 
 	</ion-list>
 	<div padding>
-	  		<button (click)="crearSolicitud()" ion-button color="secondary">Crear</button>
+	  <button ion-button color="secondary" 
+        (click)="grabarSolicitud()"
+        block>Grabar</button>
+    <button ion-button color="primary" 
+        (click)="salir()" 
+        block>Salir</button>
+
 	</div>
 	</ion-card>
 </ion-content>
